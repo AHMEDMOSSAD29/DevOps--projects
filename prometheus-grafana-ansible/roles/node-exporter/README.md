@@ -1,38 +1,31 @@
-Role Name
-=========
+# 🖥️ Ansible Role: Node Exporter
 
-A brief description of the role goes here.
+This Ansible role installs and configures **Prometheus Node Exporter** on Linux systems to expose system-level metrics such as CPU, memory, disk, and network stats. It enables Prometheus to collect infrastructure metrics from all target nodes.
 
-Requirements
-------------
+> 📂 This role is part of the [Prometheus-Grafana Monitoring Project](../../) within the [DevOps--projects repository](https://github.com/AHMEDMOSSAD29/DevOps--projects).
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+---
 
-Role Variables
---------------
+## 📚 Table of Contents
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- [Overview](#overview)
+- [Features](#features)
+ 
+---
 
-Dependencies
-------------
+## 📝 Overview
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+**Node Exporter** is a widely-used Prometheus exporter for hardware and OS metrics exposed via an HTTP endpoint. This role simplifies the process of installing and running Node Exporter as a systemd service.
 
-Example Playbook
-----------------
+---
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## ✨ Features
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- Installs the specified version of Node Exporter
+- Creates a dedicated system user
+- Downloads and extracts the Node Exporter binary
+- Sets up Node Exporter as a `systemd` service
+- Opens port `9100` (optional, if firewall is managed)
+- Starts and enables the service
 
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+ 
