@@ -1,0 +1,19 @@
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.redisHpa.name }}
+spec:
+  scaleTargetRef:
+    apiVersion: {{ .Values.redisHpa.scaleTargetRef.apiVersion }}
+    kind: {{ .Values.redisHpa.scaleTargetRef.kind }}
+    name: {{ .Values.redisHpa.scaleTargetRef.name }}
+  minReplicas: {{ .Values.redisHpa.minReplicas }}
+  maxReplicas: {{ .Values.redisHpa.maxReplicas }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.redisHpa.metrics.cpu.averageUtilization }}

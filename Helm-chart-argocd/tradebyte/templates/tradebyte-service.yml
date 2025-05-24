@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.tservice.name }}
+spec:
+  selector:
+    app: {{ .Values.tservice.selectorLabels.app }}
+  ports:
+    - port: {{ .Values.tservice.port }}
+      targetPort: {{ .Values.tservice.targetPort }}
+  type: {{ .Values.tservice.type | default "ClusterIP" }}

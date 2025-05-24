@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.tradebyte.name }}
+spec:
+  replicas: {{ .Values.tradebyte.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.tradebyte.selectorLabels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.tradebyte.podLabels.app }}
+    spec:
+      containers:
+      - name: {{ .Values.tcontainer.name }}
+        image: {{ .Values.timage.repository }}:{{ .Values.timage.tag }}
+        imagePullPolicy: {{ .Values.timage.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.tcontainer.port }}
+        {{- if .Values.tenvFromSecretName }}
+        envFrom:
+        - secretRef:
+            name: {{ .Values.tenvFromSecretName }}
+        {{- end }}
+        resources:
+          requests:
+            cpu: "{{ .Values.tresources.requests.cpu }}"
+            memory: "{{ .Values.tresources.requests.memory }}"
+          limits:
+            cpu: "{{ .Values.tresources.limits.cpu }}"
+            memory: "{{ .Values.tresources.limits.memory }}"

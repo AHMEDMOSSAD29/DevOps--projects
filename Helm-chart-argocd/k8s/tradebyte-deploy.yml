@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tradebyte-app
+spec:
+  replicas: 1  # Initial replica count (HPA will adjust this)
+  selector:
+    matchLabels:
+      app: tradebyte
+  template:
+    metadata:
+      labels:
+        app: tradebyte
+    spec:
+      containers:
+      - name: tradebyte
+        image: ahmedmosaad112/tradebyte-app
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: tradebyte-secrets
+        resources:
+          requests:
+            cpu: "100m"  # 0.1 CPU core (required for HPA)
+            memory: "128Mi"
+          limits:
+            cpu: "500m"  # 0.5 CPU core (max per pod)
+            memory: "512Mi"

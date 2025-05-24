@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tradebyte-service
+spec:
+  selector:
+    app: tradebyte
+  ports:
+    - port: 80
+      targetPort: 80
+  type: NodePort  # Exposes the app on Minikube

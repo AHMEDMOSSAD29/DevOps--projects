@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.redisDeployment.name }}
+spec:
+  replicas: {{ .Values.redisDeployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.redisDeployment.selectorLabels.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.redisDeployment.podLabels.app }}
+    spec:
+      containers:
+      - name: {{ .Values.redisContainer.name }}
+        image: {{ .Values.redisContainer.image }}:{{ .Values.redisContainer.tag }}
+        imagePullPolicy: {{ .Values.redisContainer.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.redisContainer.port }}
+        resources:
+          requests:
+            cpu: "{{ .Values.redisResources.requests.cpu }}"
+            memory: "{{ .Values.redisResources.requests.memory }}"
+          limits:
+            cpu: "{{ .Values.redisResources.limits.cpu }}"
+            memory: "{{ .Values.redisResources.limits.memory }}"

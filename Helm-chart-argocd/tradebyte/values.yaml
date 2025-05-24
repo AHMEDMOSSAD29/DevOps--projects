@@ -1,0 +1,97 @@
+#####################################################v tradebyte deployment ###########################
+tradebyte:
+  name: tradebyte-app
+  replicas: 1
+  selectorLabels:
+    app: tradebyte
+  podLabels:
+    app: tradebyte
+timage:
+  repository: ahmedmosaad112/tradebyte-app
+  tag: latest   
+  pullPolicy: IfNotPresent  
+tcontainer:
+  name: tradebyte
+  port: 80
+tenvFromSecretName: tradebyte-secrets
+tresources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+#################################################### secret ##################
+secret:
+  name: tradebyte-secrets
+  type: Opaque
+  stringData:
+    ENVIRONMENT: "PRODUCTION"
+    HOST: "0.0.0.0"
+    PORT: "80"
+    REDIS_HOST: "redis-service"
+    REDIS_PORT: "6379"
+    REDIS_DB: "0"
+#################################################### tradebyte service ##################
+tservice:
+  name: tradebyte-service
+  type: NodePort
+  port: 80
+  targetPort: 80
+  selectorLabels:
+    app: tradebyte
+#################################################### redis service ##################
+redisService:
+  name: redis-service
+  type: ClusterIP
+  port: 6379
+  targetPort: 6379
+  selectorLabels:
+    app: redis
+#################################################### redis deployment ##################
+redisDeployment:
+  name: redis
+  replicas: 1
+  selectorLabels:
+    app: redis
+  podLabels:
+    app: redis
+
+redisContainer:
+  name: redis
+  image: redis
+  tag: latest
+  pullPolicy: IfNotPresent 
+  port: 6379
+
+redisResources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+#################################################### tradebyte-hpa ##################
+hpa:
+  name: tradebyte-hpa
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tradebyte-app
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    cpu:
+      averageUtilization: 50
+#################################################### redis-hpa ##################
+redisHpa:
+  name: redis-hpa
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: redis
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    cpu:
+      averageUtilization: 50

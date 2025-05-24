@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-app
+  namespace: argocd # Ensure this is the namespace where Argo CD is installed
+spec:
+  project: default # You can specify a different project if needed
+  source:
+    repoURL: https://github.com/AHMEDMOSSAD29/tradebyte-app.git
+    targetRevision: HEAD
+    path: tradebyte
+  destination:
+    server: https://kubernetes.default.svc # For the local cluster
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true # Prune resources no longer present in the Git repository
+      selfHeal: true # Reconcile resources back to the desired state
+    syncOptions:
+    - CreateNamespace=true # Automatically create the destination namespace if it doesn't exist
