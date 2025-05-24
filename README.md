@@ -1,6 +1,16 @@
 # DevOps Projects Repository
 
 Welcome to the **DevOps Projects** repository! This repository is dedicated to showcasing practical DevOps solutions and tools through real-world projects. Each project in this repository demonstrates automation, monitoring, deployment, and other essential DevOps practices using industry-standard tools and technologies.
+<p>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" height="36" width="36"/>
+<img src="https://raw.githubusercontent.com/tush-tr/tush-tr/master/res/docker.gif" height="36" width="36" >
+<img src="https://raw.githubusercontent.com/tush-tr/tush-tr/master/res/kubernetes.svg.png"  height="36" width="36" >
+<img src="https://raw.githubusercontent.com/tush-tr/tush-tr/master/res/helm.gif"  height="36" width="36" />
+<img src="https://raw.githubusercontent.com/itsksaurabh/itsksaurabh/master/assets/terraform.gif" height="36" />
+<img src="https://raw.githubusercontent.com/tush-tr/tush-tr/master/res/cicd.gif"  height="36" width="36" />
+<img src="https://raw.githubusercontent.com/tush-tr/tush-tr/master/res/ghactions.png"  height="36" width="36" />
+ <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Jenkins_logo.svg/226px-Jenkins_logo.svg.png?20120629215426" height="36" />
+</p>
 
 > 🚀 Currently, this repository contains one project: **Prometheus-Grafana Monitoring Setup with Ansible**. More projects will be added soon!
 
