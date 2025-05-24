@@ -9,7 +9,8 @@ Welcome to the **DevOps Projects** repository! This repository is dedicated to s
 ## 📚 Table of Contents
 
 - [About the Repository](#about-the-repository)
-- [Prometheus-Grafana with Ansible](prometheus-grafana-ansible/)
+- ### 🔧 Projects
+  - [Prometheus-Grafana with Ansible](prometheus-grafana-ansible/)
   
  
 ---
