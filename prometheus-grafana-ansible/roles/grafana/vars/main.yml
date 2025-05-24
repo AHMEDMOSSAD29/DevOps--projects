@@ -1,0 +1,11 @@
+---
+    grafana_version: "10.4.2"
+    grafana_user: grafana
+    grafana_group: grafana
+    grafana_download_url: "https://dl.grafana.com/oss/release/grafana_{{ grafana_version }}_amd64.deb"
+    grafana_install_dir: /usr/share/grafana
+    grafana_config_file: /etc/grafana/grafana.ini
+    grafana_service_file: /etc/systemd/system/grafana-server.service
+    prometheus_url: "http://localhost:9090" # Adjust if Prometheus is on a different host
+    grafana_admin_user: admin
+    grafana_admin_password: admin # Consider using Ansible Vault for sensitive data

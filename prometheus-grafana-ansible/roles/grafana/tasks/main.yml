@@ -1,0 +1,38 @@
+---
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - wget
+      - apt-transport-https
+      - software-properties-common
+    state: present
+    update_cache: true
+
+- name: Add Grafana APT key
+  apt_key:
+    url: "https://apt.grafana.com/gpg.key"
+    state: present
+
+- name: Add Grafana APT repository
+  apt_repository:
+    repo: "deb https://apt.grafana.com stable main"
+    state: present
+
+- name: Install Grafana package
+  apt:
+    name: "grafana={{ grafana_version }}"
+    state: present
+    update_cache: true
+
+- name: Start Grafana service
+  systemd:
+    name: grafana-server
+    enabled: true
+    state: started
+  notify: Restart Grafana
+
+- name: Wait for Grafana to start (port 3000)
+  wait_for:
+    port: 3000
+    host: "{{ ansible_host | default(inventory_hostname) }}"
+    timeout: 60

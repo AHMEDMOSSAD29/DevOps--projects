@@ -1,0 +1,68 @@
+---
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - tar
+          - systemd
+        state: present
+        update_cache: true
+
+    - name: Create Node Exporter group
+      group:
+        name: "{{ node_exporter_group }}"
+        state: present
+        system: true
+      tags: user
+
+    - name: Create Node Exporter user
+      user:
+        name: "{{ node_exporter_user }}"
+        group: "{{ node_exporter_group }}"
+        state: present
+        system: true
+        create_home: false
+      tags: user
+
+    - name: Download Node Exporter
+      get_url:
+        url: "{{ node_exporter_download_url }}"
+        dest: /tmp/node_exporter.tar.gz
+      tags: download
+
+    - name: Extract Node Exporter
+      unarchive:
+        src: /tmp/node_exporter.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Copy Node Exporter binary
+      copy:
+        src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+        dest: "{{ node_exporter_install_dir }}/node_exporter"
+        owner: "{{ node_exporter_user }}"
+        group: "{{ node_exporter_group }}"
+        mode: "0755"
+        remote_src: true
+      tags: binary
+
+    - name: Create Node Exporter systemd service file
+      template:
+        src: node_exporter.service.j2
+        dest: "{{ node_exporter_service_file }}"
+        owner: root
+        group: root
+        mode: "0644"
+      tags: service
+
+    - name: Reload systemd manager configuration
+      systemd:
+        daemon_reload: true
+      tags: service
+
+    - name: Enable and start Node Exporter service
+      systemd:
+        name: node_exporter
+        enabled: true
+        state: started
+      tags: service

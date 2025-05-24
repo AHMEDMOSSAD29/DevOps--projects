@@ -1,0 +1,11 @@
+---
+- name: install prometheus,node-exporter and grafana as a service
+  hosts: node01
+  become: true
+  remote_user: ansible
+  become_user: root
+  gather_facts: false
+  roles:
+   - prometheus
+   - node-exporter
+   - grafana

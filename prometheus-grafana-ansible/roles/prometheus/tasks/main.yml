@@ -1,0 +1,92 @@
+---
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - tar
+          - systemd
+        state: present
+        update_cache: true
+
+    - name: Create Prometheus group
+      group:
+        name: "{{ prometheus_group }}"
+        state: present
+        system: true
+      tags: user
+    - name: Create Prometheus user
+      user:
+       name: "{{ prometheus_user }}"
+       group: "{{ prometheus_group }}"
+       state: present
+       system: true
+       create_home: true
+      tags: user  
+  
+
+    - name: Create Prometheus directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_group }}"
+        mode: "0755"
+      loop:
+        - "{{ prometheus_data_dir }}"
+        - "{{ prometheus_config_dir }}"
+      tags: directories
+
+    - name: Download Prometheus
+      get_url:
+        url: "{{ prometheus_download_url }}"
+        dest: /tmp/prometheus.tar.gz
+      tags: download
+
+    - name: Extract Prometheus
+      unarchive:
+        src: /tmp/prometheus.tar.gz
+        dest: /tmp/
+        remote_src: yes
+
+    - name: Copy Prometheus binaries
+      copy:
+        src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/{{ item }}"
+        dest: /usr/local/bin/
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_group }}"
+        mode: "0755"
+        remote_src: true
+      loop:
+        - prometheus
+        - promtool
+      tags: binaries
+
+    - name: Create Prometheus configuration file
+      template:
+        src: prometheus.yml.j2
+        dest: "{{ prometheus_config_file }}"
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_group }}"
+        mode: "0644"
+      tags: config
+
+    - name: Create Prometheus systemd service file
+      template:
+        src: prometheus.service.j2
+        dest: /etc/systemd/system/prometheus.service
+        owner: root
+        group: root
+        mode: "0644"
+      tags: service
+
+    - name: Reload systemd manager configuration
+      systemd:
+        daemon_reload: true
+      tags: service
+
+    - name: Enable and start Prometheus service
+      systemd:
+        name: prometheus
+        enabled: true
+        state: started
+      tags: service
