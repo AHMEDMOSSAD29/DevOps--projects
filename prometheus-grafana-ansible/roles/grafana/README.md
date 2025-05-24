@@ -1,38 +1,32 @@
-Role Name
-=========
+# 📊 Ansible Role: Grafana
 
-A brief description of the role goes here.
+This Ansible role automates the installation and basic configuration of **Grafana**, a powerful open-source platform for monitoring and observability. Grafana is used to visualize metrics collected by Prometheus and other data sources.
 
-Requirements
-------------
+> This role is part of the [Prometheus-Grafana Monitoring Project](../../) in the [DevOps--projects repository](https://github.com/AHMEDMOSSAD29/DevOps--projects).
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+---
 
-Role Variables
---------------
+## 📚 Table of Contents
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- [Overview](#overview)
+- [Features](#features)
+ 
+---
 
-Dependencies
-------------
+## 📝 Overview
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+This role installs Grafana on Linux systems, configures it to run as a service, and allows you to optionally define Prometheus as a data source and import pre-defined dashboards for system monitoring.
 
-Example Playbook
-----------------
+---
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+## ✨ Features
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+- Installs the official Grafana OSS package
+- Adds and enables the Grafana APT/YUM repository
+- Starts and enables the Grafana service
+- Configures default admin credentials
+- Optional:
+  - Adds Prometheus as a data source
+  - Imports Grafana dashboards via API
 
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+ 
