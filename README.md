@@ -26,7 +26,7 @@ Welcome to the **DevOps Projects** repository! This repository is dedicated to s
   - [Prometheus-Grafana with Ansible](prometheus-grafana-ansible)
   - [helm chart for py-app](Helm-chart-argocd)
   - [aws 3 tier architecture](aws-3-tier-architecture)
-  - [DBMS bash scripting](bash-dbms) 
+  - [DBMS bash scripting](bash-DBMS) 
   
  
 ---
