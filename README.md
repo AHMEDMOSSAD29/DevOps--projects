@@ -12,7 +12,7 @@ Welcome to the **DevOps Projects** repository! This repository is dedicated to s
  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Jenkins_logo.svg/226px-Jenkins_logo.svg.png?20120629215426" height="36" />
 </p>
 
-🚀 Currently, this repository features 👉 **[3 projects](.)**  
+🚀 Currently, this repository features 👉 **[5 projects](.)**  
 📌 More projects are on the way — stay tuned for updates!
 
 
@@ -26,7 +26,8 @@ Welcome to the **DevOps Projects** repository! This repository is dedicated to s
   - [Prometheus-Grafana with Ansible](prometheus-grafana-ansible)
   - [helm chart for py-app](Helm-chart-argocd)
   - [aws 3 tier architecture](aws-3-tier-architecture)
-  - [DBMS bash scripting](bash-DBMS) 
+  - [DBMS bash scripting](bash-DBMS)
+  - [EKS-CICD-APP](EKS-CICD-APP)
   
  
 ---
