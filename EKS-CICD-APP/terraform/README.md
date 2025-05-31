@@ -18,7 +18,7 @@ This Terraform module sets up a production-ready Amazon EKS cluster with support
 
 ---
 ## ✅ Deploy Infrastructure
-bash```
+``` bash
 
 terraform init
 terraform plan -var-file prod.tfvars
