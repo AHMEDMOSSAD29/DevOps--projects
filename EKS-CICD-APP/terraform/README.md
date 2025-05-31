@@ -23,3 +23,7 @@ This Terraform module sets up a production-ready Amazon EKS cluster with support
 terraform init
 terraform plan -var-file prod.tfvars
 terraform apply -var-file prod.tfvars
+```
+---
+### diagram
+![diagram](_eks.drawio.png)
