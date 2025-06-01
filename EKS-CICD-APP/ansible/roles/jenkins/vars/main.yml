@@ -1,0 +1,4 @@
+---
+kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/config"
+jenkins_admin_user: 'admin'
+jenkins_admin_password: 'admin'
