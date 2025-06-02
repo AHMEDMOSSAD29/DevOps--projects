@@ -1,14 +1,4 @@
 ---
-- name: Add Jenkins Helm repo
-  community.kubernetes.helm_repository:
-    name: jenkins
-    repo_url: https://charts.jenkins.io
-
-- name: Update Helm repo
-  ansible.builtin.command: helm repo update
-  register: helm_update
-  changed_when: "'Update Complete' in helm_update.stdout"
-
 - name: Create Jenkins namespace
   kubernetes.core.k8s:
     api_version: v1
@@ -17,23 +7,34 @@
     state: present
     kubeconfig: "{{ kubeconfig_path }}"
 
-- name: Deploy Jenkins via Helm 
-  community.kubernetes.helm:
-    name: jenkins
-    chart_ref: jenkins/jenkins
-    release_namespace: jenkins
-    kubeconfig: "{{ kubeconfig_path }}"
-    create_namespace: false
-    values:
-      controller:
-        admin:
-          username: "{{ jenkins_admin_user }}"
-          password: "{{ jenkins_admin_password }}"
-    wait: true
+- name: Deploy Jenkins 
+  kubernetes.core.k8s:
     state: present
+    definition: "{{ lookup('template', 'jenkins-deployment.yaml.j2') | from_yaml }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+
+ 
 
 - name: Expose Jenkins service
   kubernetes.core.k8s:
     state: present
     definition: "{{ lookup('template', 'jenkins-service.yaml.j2') | from_yaml }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+
+- name: Deploy serviceaccount 
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'jenkins-serviceaccount.yml.j2') | from_yaml }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+
+- name: Deploy jenkins clusterrole
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'jenkins-role.yaml.j2') | from_yaml }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+
+- name: Deploy jenkins clusterrolebinding
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'jenkins-rolebinding.yaml.j2') | from_yaml }}"
     kubeconfig: "{{ kubeconfig_path }}"

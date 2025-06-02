@@ -1,20 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins
+  name: jenkins-service
   namespace: jenkins
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app.kubernetes.io/component: jenkins-controller
   ports:
-    - name: http
+    - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30002
-    - name: agent
-      port: 50000
-      targetPort: 50000
-  selector:
-    app: jenkins
-

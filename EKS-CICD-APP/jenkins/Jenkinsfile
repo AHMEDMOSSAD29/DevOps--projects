@@ -1,0 +1,41 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Clone Repo') {
+      steps {
+        git url: 'https://github.com/AHMEDMOSSAD29/tradebyte-app.git', branch: 'main'
+      }
+    }
+
+    stage('Create Namespace') {
+      steps {
+        sh 'kubectl get namespace app || kubectl create namespace app'
+      }
+    }
+
+    stage('Deploy with Helm') {
+      steps {
+     
+          sh 'cd tradebyte'
+          sh 'helm install tradebyte-app tradebyte/  --namespace app --create-namespace'
+      }
+    }
+
+    stage('Verify Deployment') {
+      steps {
+        sh 'kubectl rollout status deployment/tradebyte-app -n app'
+        sh 'kubectl get svc -n app'
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Deployment complete'
+    }
+    failure {
+      echo '❌ Deployment failed'
+    }
+  }
+}
