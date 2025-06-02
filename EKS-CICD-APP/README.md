@@ -1,3 +1,3 @@
 ---
 ### diagram
-![diagram](eks-cicd.drawio.png)
+![diagram](cicd.png)
